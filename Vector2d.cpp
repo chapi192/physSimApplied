@@ -1,3 +1,5 @@
+//see vector3d for comments
+
 #include "Vector2d.h"
 #include <iostream>
 #include <math.h>
