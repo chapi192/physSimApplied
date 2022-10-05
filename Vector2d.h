@@ -1,3 +1,5 @@
+//see vector3d for comments
+
 #pragma once
 
 namespace vecSpace
