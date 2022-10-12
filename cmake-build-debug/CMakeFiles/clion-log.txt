@@ -1,0 +1,5 @@
+/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/opt/clion/bin/ninja/linux/ninja -G Ninja -S /home/walker/Projects/cpp_projects/physSimApplied -B /home/walker/Projects/cpp_projects/physSimApplied/cmake-build-debug
+-- Found SFML 2.5.1 in /usr/lib/cmake/SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/walker/Projects/cpp_projects/physSimApplied/cmake-build-debug

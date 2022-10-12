@@ -1,0 +1,19 @@
+# ninja log v5
+0	408	1665534447359617325	CMakeFiles/physSim.dir/Vector2d.cpp.o	ab3d59f35dfb356c
+0	793	1665534447742953029	CMakeFiles/physSim.dir/Demo10.3.2022.cpp.o	32e3af94bd20c4fc
+0	861	1665494324961362308	CMakeFiles/physSimApplied.dir/Dragging.cpp.o	42631d689b4088bb
+418	482	1665534175854834441	physSim	7eee8c6236a97197
+0	555	1665534447506284899	CMakeFiles/physSim.dir/Vector3d.cpp.o	b616403792560bfb
+0	715	1665534447666285888	CMakeFiles/physSim.dir/Dragging.cpp.o	bea31fd51e05cd15
+0	20	1665534505739986894	build.ninja	decd4f0f94221fe
+0	37	1665534446986281683	CMakeFiles/physSim.dir/Kinematics.cpp.o	83cbebdc90b829ac
+0	775	1665494324874696013	CMakeFiles/physSimApplied.dir/skeleton.cpp.o	cc31a7a7d0c87ab7
+0	418	1665534175791500833	CMakeFiles/physSim.dir/test.cpp.o	85e018e7ec04ee26
+0	737	1665534447686286012	CMakeFiles/physSim.dir/skeleton.cpp.o	bd1fb62650d50233
+0	639	1665529561294498597	CMakeFiles/physSimApplied.dir/test.cpp.o	d525e377afc30efa
+0	669	1665494324768029802	CMakeFiles/physSimApplied.dir/Vector2d.cpp.o	508696b215d82726
+0	519	1665494387894426367	CMakeFiles/physSimApplied.dir/Demo10.3.2022.cpp.o	2895eaada66c4199
+0	66	1665494324168032369	CMakeFiles/physSimApplied.dir/Kinematics.cpp.o	269dfedab32f4691
+0	690	1665494324791363036	CMakeFiles/physSimApplied.dir/Vector3d.cpp.o	a1103a7f33f37eb6
+0	20	1665534505739986894	build.ninja	decd4f0f94221fe
+0	69	1665534505813320702	physSim	f9a6eb2ca85f7eb7
