@@ -1,6 +1,6 @@
 //----------------------------------------------------IMPORTANT NOTES--------------------------------------------------//
 /*
-you may see some caution signs or warnings that are NOT ERRORS in the debug menu. Compiler is a beta, you can ignore these unless they screw up the 
+you may see some caution signs or warnings that are NOT ERRORS in the debug menu. Compiler is a beta, you can ignore these unless they screw up the
 code. this is good for now.
 
 The coordinates of an SFML window move accross the screen left to right, and down the screen top to bottom. This means that to the right is positive
@@ -18,45 +18,52 @@ is 0,0 but its bottom right is 10,10. To draw the square at a particular locatio
 #include "SFML/System.hpp"
 #include <iostream>
 
+using vec2 = sf::Vector2f;
+
 //how often the computer refreshes the window per second
 int frameRate = 100;
 
-double timeElapsed = 0;
+float timeElapsed = 0;
 
-//dt is set at a fraction of the framerate. So instead of updating where it should be an arbitrary number of times, it updates where we should be 
+//dt is set at a fraction of the framerate. So instead of updating where it should be an arbitrary number of times, it updates where we should be
 //exactly per frame
-double dt = 1 / ((double)frameRate);
+float dt = 1.0 / frameRate;
 
-//size of the ball object
-float radius = 20.0f;
+// implementing Circle as SFML's CircleShape to expand on it with physics
+struct Circle : public sf::CircleShape {
+	vec2 vel{};
 
-//-------------------------------------------------MAIN FUNCTION-----------------------------------------------------------//
-int main()
-{
-	//window is created.
-	sf::RenderWindow window(sf::VideoMode(600, 300), "Kinematics");
-	window.setFramerateLimit(frameRate);
+	Circle(float radius, vec2 pos, sf::Color c)
+		: sf::CircleShape{radius} {
+		setFillColor(c);
+		setPosition(pos.x - radius, pos.y - radius);
+	}
 
-	//creating our ball. It is green!
-	sf::CircleShape shape(radius);
-	shape.setFillColor(sf::Color::Green);
+	vec2 getPos() {
+		return getPosition() + vec2{getRadius(), getRadius()};
+	}
 
-	//the ball will start at the top left. Remember to offset if you want to move according to its center!
-	shape.setPosition(0, 0);
+	void move(const vec2& dpos) {
+		sf::CircleShape::move(dpos.x, dpos.y);
+	}
+};
 
-	while (window.isOpen())
-	{
-		//SFML stuff. This block just means that if we press escape or hit the close window button on the window, close the window.
+void update(Circle& c, const vec2& acc, const sf::RenderWindow& window) {
+	timeElapsed += dt;
+
+	c.vel += acc * dt;
+	c.move(c.vel * dt);
+}
+
+void SFML_eventHandler(sf::RenderWindow& window) {
 		sf::Event event;
-		while (window.pollEvent(event))
-		{
+	while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
-
-			if (event.KeyPressed && event.key.code == sf::Keyboard::Escape)
-				window.close();
+	}
 		}
 
+void SFML_draw(sf::RenderWindow& window, const sf::CircleShape& shape) {
 		//clean the window, so previous frames are not visible
 		window.clear();
 
@@ -65,7 +72,19 @@ int main()
 
 		//display drawn elements!
 		window.display();
-		
+}
+
+int main() {
+	//window is created.
+	sf::RenderWindow window(sf::VideoMode(600, 300), "Kinematics");
+	window.setFramerateLimit(frameRate);
+
+	float radius = 20.0f;
+	Circle circle{ radius, {120, 20}, sf::Color::Green };
+	while (window.isOpen()) {
+		SFML_eventHandler(window);
+		update(circle, {0.f,9.81f}, window);
+		SFML_draw(window, circle);
 	}
 
 	return 0;
