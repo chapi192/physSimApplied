@@ -25,13 +25,13 @@ struct Circle : public sf::CircleShape {
 };
 
 struct Scene {
-	float dt = 1.0 / frameRate;
+	float dt;
 	float timeElapsed = 0;
 	vec2 acc;
 	std::vector<Circle> circles;
 
-	Scene(vec2 p_acc)
-		: acc{ p_acc } {
+	Scene(int frameRate, vec2 p_acc)
+		: dt{ 1.0f / frameRate }, acc{ p_acc } {
 		float radius = 20.0f;
 		circles.push_back({ radius, {120,  20}, sf::Color::Green });
 		circles.push_back({ radius, {320, 180}, sf::Color::Blue });

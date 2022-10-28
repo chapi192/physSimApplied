@@ -10,6 +10,8 @@ Objects are also drawn left to right, top to bottom. This means that a square of
 is 0,0 but its bottom right is 10,10. To draw the square at a particular location, we have to offset its coordinates.
 */
 
+#include "Scene.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -20,7 +22,6 @@ using vec2 = sf::Vector2f;
 
 //how often the computer refreshes the window per second
 int frameRate = 100;
-#include "Scene.h"
 
 void SFML_eventHandler(sf::RenderWindow& window) {
 	sf::Event event;
@@ -31,11 +32,10 @@ void SFML_eventHandler(sf::RenderWindow& window) {
 }
 
 int main() {
-	//window is created.
-	sf::RenderWindow window(sf::VideoMode(600, 300), "Kinematics");
+	sf::RenderWindow window(sf::VideoMode(600, 300), "Collisions");
 	window.setFramerateLimit(frameRate);
 
-	Scene scene{ { 0.f, 9.81f } };
+	Scene scene{ frameRate, { 0.f, 9.81f } };
 	while (window.isOpen()) {
 		SFML_eventHandler(window);
 		scene.update(window);
@@ -43,5 +43,4 @@ int main() {
 	}
 
 	return 0;
-
 }
