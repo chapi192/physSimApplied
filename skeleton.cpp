@@ -23,12 +23,6 @@ using vec2 = sf::Vector2f;
 //how often the computer refreshes the window per second
 int frameRate = 100;
 
-float timeElapsed = 0;
-
-//dt is set at a fraction of the framerate. So instead of updating where it should be an arbitrary number of times, it updates where we should be
-//exactly per frame
-float dt = 1.0 / frameRate;
-
 // implementing Circle as SFML's CircleShape to expand on it with physics
 struct Circle : public sf::CircleShape {
 	vec2 vel{};
@@ -48,30 +42,48 @@ struct Circle : public sf::CircleShape {
 	}
 };
 
-void update(Circle& c, const vec2& acc, const sf::RenderWindow& window) {
-	timeElapsed += dt;
+struct Scene {
+	float dt = 1.0 / frameRate;
+	float timeElapsed = 0;
+	vec2 acc;
+	std::vector<Circle> circles;
 
-	c.vel += acc * dt;
-	c.move(c.vel * dt);
-}
-
-void SFML_eventHandler(sf::RenderWindow& window) {
-		sf::Event event;
-	while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
-				window.close();
+	Scene(vec2 p_acc)
+		: acc{ p_acc } {
+		float radius = 20.0f;
+		circles.push_back({ radius, {120,  20}, sf::Color::Green });
+		circles.push_back({ radius, {320, 180}, sf::Color::Blue });
 	}
-		}
 
-void SFML_draw(sf::RenderWindow& window, const sf::CircleShape& shape) {
+	void update(const sf::RenderWindow& window) {
+		timeElapsed += dt;
+
+		for (auto& c : circles) {
+			c.vel += acc * dt;
+			c.move(c.vel * dt);
+		}
+	}
+
+	void SFML_draw(sf::RenderWindow& window) {
 		//clean the window, so previous frames are not visible
 		window.clear();
 
-		//draw the shape!
-		window.draw(shape);
+		// draw all of the circles in scene
+		for (auto& c : circles) {
+			window.draw(c);
+		}
 
 		//display drawn elements!
 		window.display();
+	}
+};
+
+void SFML_eventHandler(sf::RenderWindow& window) {
+	sf::Event event;
+	while (window.pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			window.close();
+	}
 }
 
 int main() {
@@ -79,12 +91,11 @@ int main() {
 	sf::RenderWindow window(sf::VideoMode(600, 300), "Kinematics");
 	window.setFramerateLimit(frameRate);
 
-	float radius = 20.0f;
-	Circle circle{ radius, {120, 20}, sf::Color::Green };
+	Scene scene{ { 0.f, 9.81f } };
 	while (window.isOpen()) {
 		SFML_eventHandler(window);
-		update(circle, {0.f,9.81f}, window);
-		SFML_draw(window, circle);
+		scene.update(window);
+		scene.SFML_draw(window);
 	}
 
 	return 0;
