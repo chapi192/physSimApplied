@@ -14,3 +14,6 @@ Eliptical Orbits:
 
 RKprojetiles:
   Projectile motion with drag using RK integration
+
+nozzle: 
+  Simple sim of changing thrust with altitude related to external atmospheric pressure and gravity
